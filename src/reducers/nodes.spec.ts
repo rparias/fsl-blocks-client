@@ -1,5 +1,5 @@
 import mockFetch from "cross-fetch";
-import reducer, { checkNodeStatus } from "./nodes";
+import reducer, { checkNodeStatus, checkNodeBlocks } from "./nodes";
 import { Node } from "../types/Node";
 import initialState from "./initialState";
 
@@ -17,6 +17,8 @@ describe("Reducers::Nodes", () => {
     online: false,
     name: "Node 1",
     loading: false,
+    blocks: [],
+    loadingBlocks: false,
   };
 
   const nodeB = {
@@ -24,6 +26,8 @@ describe("Reducers::Nodes", () => {
     online: false,
     name: "Node 2",
     loading: false,
+    blocks: [],
+    loadingBlocks: false,
   };
 
   it("should set initial state by default", () => {
@@ -102,6 +106,74 @@ describe("Reducers::Nodes", () => {
 
     expect(reducer(appState, action)).toEqual(expected);
   });
+
+  it("should handle checkNodeBlocks.pending", () => {
+    const appState = {
+      list: [nodeA, nodeB],
+    };
+    const action = { type: checkNodeBlocks.pending, meta: { arg: nodeA } };
+    const expected = {
+      list: [
+        {
+          ...nodeA,
+          loadingBlocks: true,
+        },
+        nodeB,
+      ],
+    };
+
+    expect(reducer(appState, action)).toEqual(expected);
+  });
+
+  it("should handle checkNodeBlocks.fulfilled", () => {
+    const appState = {
+      list: [nodeA, nodeB],
+    };
+    const action = {
+      type: checkNodeBlocks.fulfilled,
+      meta: { arg: nodeA },
+      payload: {
+        data: [
+          { attributes: { index: 1, data: "test data 01" } },
+          { attributes: { index: 2, data: "test data 02" } },
+        ],
+      },
+    };
+    const expected = {
+      list: [
+        {
+          ...nodeA,
+          blocks: [
+            { index: 1, data: "test data 01" },
+            { index: 2, data: "test data 02" },
+          ],
+          loadingBlocks: false,
+        },
+        nodeB,
+      ],
+    };
+
+    expect(reducer(appState, action)).toEqual(expected);
+  });
+
+  it("should handle checkNodeBlocks.rejected", () => {
+    const appState = {
+      list: [nodeA, nodeB],
+    };
+    const action = { type: checkNodeBlocks.rejected, meta: { arg: nodeA } };
+    const expected = {
+      list: [
+        {
+          ...nodeA,
+          blocks: [],
+          loadingBlocks: false,
+        },
+        nodeB,
+      ],
+    };
+
+    expect(reducer(appState, action)).toEqual(expected);
+  });
 });
 
 describe("Actions::Nodes", () => {
@@ -117,6 +189,8 @@ describe("Actions::Nodes", () => {
     online: false,
     name: "Node 1",
     loading: false,
+    blocks: [],
+    loadingBlocks: false,
   };
 
   it("should fetch the node status", async () => {
@@ -154,6 +228,59 @@ describe("Actions::Nodes", () => {
       }),
       expect.objectContaining({
         type: checkNodeStatus.rejected.type,
+        meta: expect.objectContaining({ arg: node }),
+        error: expect.objectContaining({ message: "Network Error" }),
+      }),
+    ]);
+
+    expect(dispatch.mock.calls.flat()).toEqual(expected);
+  });
+
+  it("should fetch the node blocks", async () => {
+    mockedFech.mockReturnValueOnce(
+      Promise.resolve({
+        status: 200,
+        json() {
+          return Promise.resolve({
+            data: [
+              { attributes: { index: 1, data: "test data 01" } },
+              { attributes: { index: 2, data: "test data 02" } },
+            ],
+          });
+        },
+      })
+    );
+    await checkNodeBlocks(node)(dispatch, () => {}, {});
+
+    const expected = expect.arrayContaining([
+      expect.objectContaining({
+        type: checkNodeBlocks.pending.type,
+        meta: expect.objectContaining({ arg: node }),
+      }),
+      expect.objectContaining({
+        type: checkNodeBlocks.fulfilled.type,
+        meta: expect.objectContaining({ arg: node }),
+        payload: {
+          data: [
+            { attributes: { index: 1, data: "test data 01" } },
+            { attributes: { index: 2, data: "test data 02" } },
+          ],
+        },
+      }),
+    ]);
+    expect(dispatch.mock.calls.flat()).toEqual(expected);
+  });
+
+  it("should fail to fetch the node blocks", async () => {
+    mockedFech.mockReturnValueOnce(Promise.reject(new Error("Network Error")));
+    await checkNodeBlocks(node)(dispatch, () => {}, {});
+    const expected = expect.arrayContaining([
+      expect.objectContaining({
+        type: checkNodeBlocks.pending.type,
+        meta: expect.objectContaining({ arg: node }),
+      }),
+      expect.objectContaining({
+        type: checkNodeBlocks.rejected.type,
         meta: expect.objectContaining({ arg: node }),
         error: expect.objectContaining({ message: "Network Error" }),
       }),

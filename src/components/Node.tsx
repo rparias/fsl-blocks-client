@@ -5,12 +5,13 @@ import {
   AccordionSummary,
   Typography,
   AccordionDetails,
-  Box,
+  Box
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import colors from "../constants/colors";
 import Status from "./Status";
 import { Node as NodeType } from "../types/Node";
+import Blocks from "../containers/Blocks";
 
 type Props = {
   node: NodeType;
@@ -80,7 +81,7 @@ const Node: React.FC<Props> = ({ node, expanded, toggleNodeExpanded }) => {
         </BoxSummaryContent>
       </AccordionSummaryContainer>
       <AccordionDetails>
-        <Typography>Blocks go here</Typography>
+        <Blocks blocks={node.blocks} loadingBlocks={node.loadingBlocks} />
       </AccordionDetails>
     </AccordionRoot>
   );

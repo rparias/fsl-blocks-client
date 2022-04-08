@@ -110,11 +110,26 @@ exports[`<Nodes /> should match snapshot 1`] = `
             <div
               className="MuiAccordionDetails-root css-15v22id-MuiAccordionDetails-root"
             >
-              <p
-                className="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+              <div
+                className="MuiBox-root css-no6nud"
               >
-                Blocks go here
-              </p>
+                <h6
+                  className="MuiTypography-root MuiTypography-subtitle1 css-gtjok7-MuiTypography-root"
+                >
+                  001
+                </h6>
+                data test 01
+              </div>
+              <div
+                className="MuiBox-root css-no6nud"
+              >
+                <h6
+                  className="MuiTypography-root MuiTypography-subtitle1 css-gtjok7-MuiTypography-root"
+                >
+                  002
+                </h6>
+                data test 02
+              </div>
             </div>
           </div>
         </div>
@@ -214,11 +229,113 @@ exports[`<Nodes /> should match snapshot 1`] = `
             <div
               className="MuiAccordionDetails-root css-15v22id-MuiAccordionDetails-root"
             >
-              <p
-                className="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+              <span>
+                Loading...
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-185lh1p-MuiPaper-root-MuiAccordion-root"
+  >
+    <div
+      aria-expanded={false}
+      className="MuiButtonBase-root MuiAccordionSummary-root MuiAccordionSummary-gutters css-n997py-MuiButtonBase-root-MuiAccordionSummary-root"
+      onBlur={[Function]}
+      onClick={[Function]}
+      onContextMenu={[Function]}
+      onDragLeave={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseDown={[Function]}
+      onMouseLeave={[Function]}
+      onMouseUp={[Function]}
+      onTouchEnd={[Function]}
+      onTouchMove={[Function]}
+      onTouchStart={[Function]}
+      role="button"
+      tabIndex={0}
+    >
+      <div
+        className="MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-o4b71y-MuiAccordionSummary-content"
+      >
+        <div
+          className="MuiBox-root css-16rygv8"
+        >
+          <div
+            className="MuiBox-root css-0"
+          >
+            <h5
+              className="MuiTypography-root MuiTypography-h5 css-bl5h9z-MuiTypography-root"
+            >
+              Node 3
+            </h5>
+            <h6
+              className="MuiTypography-root MuiTypography-subtitle1 css-gvet60-MuiTypography-root"
+            >
+              https://calm-anchorage-82141.herokuapp.com
+            </h6>
+          </div>
+          <div
+            className="MuiBox-root css-70qvj9"
+          >
+            <span
+              className="css-1y3s8m3"
+            />
+            <span
+              className="css-10g39r7"
+            >
+              OFFLINE
+            </span>
+          </div>
+        </div>
+      </div>
+      <div
+        className="MuiAccordionSummary-expandIconWrapper css-yw020d-MuiAccordionSummary-expandIconWrapper"
+      >
+        <svg
+          aria-hidden={true}
+          className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+          data-testid="ExpandMoreIcon"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+          />
+        </svg>
+      </div>
+    </div>
+    <div
+      className="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
+      style={
+        Object {
+          "minHeight": "0px",
+        }
+      }
+    >
+      <div
+        className="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
+      >
+        <div
+          className="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
+        >
+          <div
+            className="MuiAccordion-region"
+            role="region"
+          >
+            <div
+              className="MuiAccordionDetails-root css-15v22id-MuiAccordionDetails-root"
+            >
+              <span
+                className="css-15j829y"
               >
-                Blocks go here
-              </p>
+                There are no blocks available
+              </span>
             </div>
           </div>
         </div>

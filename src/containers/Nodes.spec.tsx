@@ -16,12 +16,24 @@ describe("<Nodes />", () => {
         online: false,
         name: "Node 1",
         loading: false,
+        blocks: [{index: 1, data: 'data test 01'}, {index: 2, data: 'data test 02'}],
+        loadingBlocks: false
       },
       {
         url: "https://secret-lowlands-62331.herokuapp.com",
         online: false,
         name: "Node 2",
         loading: false,
+        blocks: [],
+        loadingBlocks: true
+      },
+      {
+        url: "https://calm-anchorage-82141.herokuapp.com",
+        online: false,
+        name: "Node 3",
+        loading: false,
+        blocks: [],
+        loadingBlocks: false
       },
     ],
   };
@@ -45,7 +57,7 @@ describe("<Nodes />", () => {
   it("should contain <Node />", () => {
     const wrapper = mount(setup());
 
-    expect(wrapper.find(Node).length).toEqual(2);
+    expect(wrapper.find(Node).length).toEqual(3);
     expect(store.getActions()).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
